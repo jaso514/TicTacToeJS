@@ -4,10 +4,15 @@ require_once dirname(__FILE__) . "/../Libs/MoveTicTacToe.php";
 
 class TicTacToeTest extends PHPUnit_Framework_TestCase{
 	private $bot;
+	
 	protected function setUp() {
       $this->bot = new MoveTicTacToe();
   }
 
+	/**
+	 * Test the first movement fo the bot
+	 * need to return an array with 3 items
+	 */
   public function testInitialize() {
   	$board = [['X','',''],['','',''],['','','']];
 
@@ -15,6 +20,9 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase{
     $this->assertEquals(3, count($result));
   }
 
+	/**
+	 * Test the response if the board don't have empty cells
+	 */
   public function testFullBoard() {
   	$board = [['X','X','O'],['O','O','X'],['X','O','X']];
 
@@ -22,6 +30,9 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase{
     $this->assertEquals(true, array_key_exists('error', $result));
   }
 
+	/**
+	 * Test the case if the bot can win in one movement
+	 */
   public function testWinCase() {
   	$board = [
 		  	['X','','O'],
@@ -32,6 +43,9 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase{
   	$this->assertEquals([2,0,'O'], $result);
   }
 
+	/**
+	 * Test the case if the bot can block a posible winner movement of the user
+	 */
   public function testBlockCase() {
   	$board = [
 		  	['X','','O'],
@@ -42,7 +56,10 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase{
   	$this->assertEquals([1,1,'O'], $result);
   }
 
-  public function testBlockCase2() {
+	/**
+	 * Test the of the priority between block or win in the next move
+	 */
+  public function testBlockOrWinCase() {
   	$board = [
 		  	['O','','O'],
 		  	['','X',''],
