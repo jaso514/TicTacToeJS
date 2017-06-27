@@ -15,17 +15,29 @@ class GameController extends RestController{
 			]);
 	}
 
+	/**
+	 * GET: receive the x and y position and return the bot move
+	 * @param array $x
+	 * @param array $y
+	 * @param string $userToken
+   * @return array
+	 */
 	public function move ($x, $y, $userToken) {
+		// load the board from session
 		if (!array_key_exists('board', $_SESSION)) {
 			$_SESSION['board'] = $this->board;
 		} else {
 			$_SESSION['board'][$x][$y] = $userToken;
 		}
 		
+		// call the move
 		$botMove = new MoveTicTacToe();
 		$move = $botMove->makeMove($_SESSION['board'], $userToken);
+		// verify if the move is correctly
 		if (count($move)>=3) {
+			// update the board
 			$_SESSION['board'][$move[0]][$move[1]] = $move[2];
+			// convert the response to hash 
 			$response = [
 					'x'=> $move[0],
 					'y'=> $move[1],

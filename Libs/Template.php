@@ -9,7 +9,8 @@ class Template {
  
   /** Display Template **/
   function render($view, $data=[]) {
-    extract($data);
+    extract($data);// convert the data array to php vars to the view
+
     if (file_exists(BASEPATH . DS . 'App' . DS . 'Views' . DS . 'header.php')) {
       include (BASEPATH . DS . 'App' . DS . 'Views' . DS . 'header.php');
     }
